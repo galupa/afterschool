@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Middup</string>
+
+    <!-- strings for Auth UI demo activities -->
+    <eat-comment />
+    <string name="launch_title">MIDDUP</string>
+    <string name="sign_in">Sign in</string>
+
+    <string name="name_auth_ui">Auth UI demo</string>
+
+    <string name="email_label">Email</string>
+
+    <string name="register_student">Please input student data, you can use this app features after the teacher approve the student</string>
+    <string name="register_submited">Data submited, please wait for teacher to approve your application</string>
+
+    <string name="unknown_response">Unexpected onActivityResult response code</string>
+    <string name="unknown_sign_in_response">Unknown response from AuthUI sign-in</string>
+    <string name="sign_in_cancelled">Sign in cancelled</string>
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="signed_in_header">You are signed in!</string>
+    <string name="sign_out">Sign out</string>
+    <string name="delete_account_label">Delete account</string>
+    <string name="sign_out_failed">Sign out failed</string>
+    <string name="delete_account_failed">Delete account failed</string>
+    <string name="user_profile_header">User profile:</string>
+    <string name="profile_picture_content_desc">Profile picture</string>
+    <string name="default_theme">Default theme</string>
+    <string name="configuration_required">Configuration is required - see README.md</string>
+    <string name="other_options_header">Other Options:</string>
+    <string name="enable_smartlock">Enable SmartLock for Passwords</string>
+    <string name="rational_image_perm">This sample will read an image from local storage to upload to Cloud Storage.</string>
+    <string name="anonymous_auth_failed_msg">Anonymous authentication failed, various components of the demo will not work. Make sure your device is online and that Anonymous Auth is configured in your Firebase project(https://console.firebase.google.com/project/_/authentication/providers)</string>
+    <string name="extra_google_scopes">Example extra Google scopes</string>
+    <string name="unknown_error">An unknown error occurred</string>
+
+    <!-- strings for database demo activities -->
+    <string name="signed_in">Signed In</string>
+    <string name="title_activity_student_status">Student Status</string>
+    <string name="title_activity_teacher_dashboard">Student List</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_student_detail">Student Detail</string>
+    <string name="title_home">Home</string>
+    <string name="title_notify">Notify Parent</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_approval">ApprovalActivity</string>
+    <string name="title_activity_notify_teacher">NotifyTeacher</string>
+</resources>

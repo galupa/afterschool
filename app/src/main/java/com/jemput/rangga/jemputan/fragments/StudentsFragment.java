@@ -1,0 +1,216 @@
+package com.jemput.rangga.jemputan.fragments;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.jemput.rangga.jemputan.R;
+import com.jemput.rangga.jemputan.models.PickUpStatus;
+import com.jemput.rangga.jemputan.models.Student;
+import com.jemput.rangga.jemputan.models.Students;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+/**
+ * A fragment representing a list of Items.
+ * <p/>
+ * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * interface.
+ */
+public class StudentsFragment extends Fragment {
+
+    // TODO: Customize parameter argument names
+    private static final String ARG_COLUMN_COUNT = "column-count";
+    // TODO: Customize parameters
+    private int mColumnCount = 1;
+    private OnListFragmentInteractionListener mListener;
+    private Students students = new Students();
+
+    private DatabaseReference mRef;
+    private DatabaseReference studentRef;
+    private DatabaseReference statusRef;
+
+    private MyStudentsRecyclerViewAdapter mAdapter;
+
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public StudentsFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            mListener = (OnListFragmentInteractionListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    // TODO: Customize parameter initialization
+    @SuppressWarnings("unused")
+    public static StudentsFragment newInstance(int columnCount) {
+        StudentsFragment fragment = new StudentsFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_students_list, container, false);
+        initList();
+
+        // Set the adapter
+        if (view instanceof RecyclerView) {
+            mAdapter = new MyStudentsRecyclerViewAdapter(students.ITEMS, mListener);
+            Context context = view.getContext();
+            RecyclerView recyclerView = (RecyclerView) view;
+            if (mColumnCount <= 1) {
+                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            } else {
+                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            }
+            recyclerView.setAdapter(mAdapter);
+        }
+        return view;
+    }
+
+
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onListFragmentInteraction(Student item);
+    }
+
+    private void initList(){
+        mRef = FirebaseDatabase.getInstance().getReference();
+        studentRef = mRef.child("students");
+        statusRef = mRef.child("picks");
+        Log.d("DEBUG", "masuk sini2 student");
+
+        studentRef.orderByChild("approved").equalTo(true).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Log.d("DEBUG", "aaaaaaa");
+                Student student = dataSnapshot.getValue(Student.class);
+                students.addItem(student);
+                mAdapter.notifyDataSetChanged();
+                System.out.println("Previous Post ID: " + student.getGroup());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                Log.d("DEBUG", "aaaaaaachange");
+                Student student = dataSnapshot.getValue(Student.class);
+                students.addItem(student);
+                mAdapter.notifyDataSetChanged();
+                System.out.println("Previous Post ID: " + student.getGroup());
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Log.d("DEBUG", "removed");
+                Student student = dataSnapshot.getValue(Student.class);
+                students.removeItem(student);
+                mAdapter.notifyDataSetChanged();
+                System.out.println("Previous Post ID: " + student.getGroup());
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("DEBUG", databaseError.getDetails());
+            }
+        });
+
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c.getTime());
+
+        statusRef.orderByChild("date").equalTo(formattedDate).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+                Log.d("DEBUG", "aaaaaaa");
+                editStatus(dataSnapshot);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
+                Log.d("DEBUG", "aaaaaaachange");
+                editStatus(dataSnapshot);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("DEBUG", databaseError.getDetails());
+            }
+        });
+    }
+    private void editStatus(DataSnapshot dataSnapshot){
+        PickUpStatus status = dataSnapshot.getValue(PickUpStatus.class);
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        String formattedDate = df.format(c.getTime());
+
+        String key = dataSnapshot.getKey().replace(formattedDate, "");
+        Log.d("TEST", key);
+
+        Student student = new Student();
+        student.setCurrentStatus(status.getPickUpStatus());
+        student.setParentId(key);
+        students.editItem(student);
+        mAdapter.notifyDataSetChanged();
+    }
+}

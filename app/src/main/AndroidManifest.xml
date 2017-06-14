@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jemput.rangga.jemputan">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo_color"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo_color"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- Auth UI demo -->
+        <activity
+            android:name=".auth.AuthUiActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name=".auth.SignedInActivity"
+            android:label="@string/name_auth_ui" />
+        <activity android:name=".activities.RegisterStudentActivity" />
+        <activity
+            android:name=".activities.StudentStatusActivity"
+            android:label="@string/title_activity_student_status"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.TeacherDashboardActivity"
+            android:label="@string/title_activity_teacher_dashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.StudentDetailActivity"
+            android:label="@string/title_activity_student_detail" />
+        <activity
+            android:name=".activities.ApprovalActivity"
+            android:label="@string/title_activity_approval"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".services.OngoingNotificationService" />
+
+        <receiver android:name=".services.OngoingNotificationServiceStarter">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".activities.NotifyTeacherActivity"
+            android:label="@string/title_activity_notify_teacher"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>

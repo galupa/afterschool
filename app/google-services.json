@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "993353914565",
+    "firebase_url": "https://jemput-e8707.firebaseio.com",
+    "project_id": "jemput-e8707",
+    "storage_bucket": "jemput-e8707.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993353914565:android:91eecf4730fc920b",
+        "android_client_info": {
+          "package_name": "com.firebase.uidemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993353914565-81ov8ddnmscebu359nl9po0v3gj7muf0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj-e5KFXK2gry1bWzS6gJ-uBGBVJc17mI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993353914565:android:c96f383e37320a32",
+        "android_client_info": {
+          "package_name": "com.jemput.rangga.jemputan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993353914565-81ov8ddnmscebu359nl9po0v3gj7muf0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj-e5KFXK2gry1bWzS6gJ-uBGBVJc17mI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
